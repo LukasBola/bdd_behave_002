@@ -29,7 +29,7 @@ def step_impl(context):
 @when('I select "{value}" from "{select_id}" select')
 def step_impl(context,value,select_id):
 	sel = context.browser.find_element_by_xpath(
-		'//select [@id = "{}"] / option [text() = "{}"]'.format(select_id, value))
+		'//select [@id = "{}"]/option [text() = "{}"]'.format(select_id, value))
 	sel.click()
 	time.sleep(1)
 
@@ -42,13 +42,19 @@ def step_impl(context, save):
 @then('there is a car: brand "{brand}", model "{model}", year "{year}"')
 def step_impl(context, brand, model, year):
 	context.browser.find_element_by_xpath(
-		'//table [@id = "customers"]//tr[td[@class = "brand"][text() = "{}"]]'.format(brand)
-		)
-	context.browser.find_element_by_xpath(
-		'//table [@id = "customers"]//tr[td[@class = "model"][text() = "{}"]]'.format(model)
-		)
-	context.browser.find_element_by_xpath(
-	'//table [@id = "customers"]//tr[td[@class = "year"][text() = "{}"]]'.format(year)
-	)
+		'//table [@id = "customers"]//tr'
+		'[td[@class = "brand"][text()="{}"]]'
+		'[td[@class = "model"][text()="{}"]]'
+		'[td[@class = "year"][text()="{}"]]'.format(brand, model, year))
+
+	# context.browser.find_element_by_xpath(
+	# 	'//table [@id = "customers"]//tr//td[@class = "brand"][text() = "{}"]'.format(brand)
+	# 	)
+	# context.browser.find_element_by_xpath(
+	# 	'//table [@id = "customers"]//tr//td[@class = "model"][text() = "{}"]'.format(model)
+	# 	)
+	# context.browser.find_element_by_xpath(
+	# '//table [@id = "customers"]//tr//td[@class = "year"][text() = "{}"]'.format(year)
+	# )
 
 
